@@ -1,0 +1,42 @@
+[
+    {
+        "roomId": 1,
+        "name": "软件大楼3号楼508",
+        "supervisor": "小李",
+        "size": 30,
+        "status": 0,
+        "detail": "进入考场"
+    },
+    {
+        "roomId": 2,
+        "name": "软件大楼3号楼508",
+        "supervisor": "小宋",
+        "size": 30,
+        "status": 0,
+        "detail": "进入考场"
+    },
+    {
+        "roomId": 3,
+        "name": "软件大楼3号楼508",
+        "supervisor": "小赵",
+        "size": 30,
+        "status": 0,
+        "detail": "进入考场"
+    },
+    {
+        "roomId": 4,
+        "name": "软件大楼3号楼508",
+        "supervisor": "小元",
+        "size": 30,
+        "status": 0,
+        "detail": "进入考场"
+    },
+    {
+        "roomId": 5,
+        "name": "软件大楼3号楼508",
+        "supervisor": "小科",
+        "size": 30,
+        "status": 0,
+        "detail": "进入考场"
+    }
+]

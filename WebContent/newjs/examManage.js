@@ -87,7 +87,7 @@ examManage.controller('examManageCtrl', function ($scope, $rootScope, $http, $wi
     var subjectStatus = {};
     $window.sessionStorage.subjectStatus = JSON.stringify(subjectStatus);
 
-    $scope.operationMetaInfo = ['试卷管理', '考生管理', '考场管理', '考生试卷安排', '考生考场安排', '系统管理'];
+    $scope.operationMetaInfo = ['试卷管理', '考生管理', '考场管理', '考生试卷安排', '考生考场安排', '导出考试安排', '系统管理'];
     // 控制标签显示
     $scope.active = [];
     // 控制标签页显示
@@ -115,6 +115,9 @@ examManage.controller('examManageCtrl', function ($scope, $rootScope, $http, $wi
         }, {
             tabName: ['考生考场安排'],
             tabUrl: ['stuRoom1']
+        }, {
+            tabName: ['导出考试安排'],
+            tabUrl: ['examArrange']
         }, {
             tabName: ['系统管理'],
             tabUrl: ['setSystem1']
@@ -374,7 +377,7 @@ examManage.controller('stuImportCtrl', function ($scope, $http, $rootScope, $win
         $scope.progressPer = 0;
         $http({
             method: 'POST',
-            url: 'form',
+            url: '/MS/paper/stuForm',
             data: formData,
             headers: {
                 'Content-Type': undefined,
@@ -430,6 +433,35 @@ examManage.controller('stuImportCtrl', function ($scope, $http, $rootScope, $win
         $scope.orderCondition = value;
         $scope.isReverse = !$scope.isReverse;
     }
+     // 刷新
+    $scope.refresh = function () {
+        refresh();
+    };
+    //每间隔30s自动刷新
+    var timingPromise = undefined;
+    // timingPromise = $interval(function () { refresh() }, 30000);
+
+    function refresh() {
+
+        $http({
+            method: 'GET',
+            url: '/MS/paper/stuTable',
+            params: {
+                token: $window.sessionStorage.token
+            }
+        })
+            .then(
+            function success(response) {
+                $scope.examineesInfo = response.data;
+                $scope.orderCondition = 'id';
+                $scope.isReverse = false;
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
+    }
 
 });
 examManage.controller('stuInputCtrl', function ($scope, $http, $rootScope, $window, roomManage) {
@@ -466,7 +498,7 @@ examManage.controller('stuInputCtrl', function ($scope, $http, $rootScope, $wind
         $scope.progressPer = 0;
         $http({
             method: 'POST',
-            url: '/EMS/examManage/stuPicture',
+            url: '/MS/paper/stuPicture',
             data: formData,
             headers: {
                 'Content-Type': undefined,
@@ -492,6 +524,27 @@ examManage.controller('stuInputCtrl', function ($scope, $http, $rootScope, $wind
         $rootScope.stuSubject = '';
         $rootScope.stuSubNum = '';
         $rootScope.stuPicture = '';
+         $http({
+            method: 'GET',
+            url: '/MS/paper/stuArrange',
+            params: {
+                stuName : $rootScope.stuName,
+                stuGender: $rootScope.stuGender,
+                stuId: $rootScope.stuId,
+                stuSubject=$rootScope.stuSubject,
+                stuSubNum=$rootScope.stuSubNum,
+                stuPicture=$rootScope.stuPicture
+            }
+        })
+            .then(
+            function success(response) {
+                alert("保存成功！");
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
 
 
 
@@ -542,7 +595,7 @@ examManage.controller('roomImportCtrl', function ($scope, $http, $rootScope, $wi
         $scope.progressPer = 0;
         $http({
             method: 'POST',
-            url: 'form',
+            url: 'MS/paper/roomForm',
             data: formData,
             headers: {
                 'Content-Type': undefined,
@@ -589,6 +642,35 @@ examManage.controller('roomImportCtrl', function ($scope, $http, $rootScope, $wi
         $scope.orderCondition = value;
         $scope.isReverse = !$scope.isReverse;
     }
+    // 刷新
+    $scope.refresh = function () {
+        refresh();
+    };
+    //每间隔30s自动刷新
+    var timingPromise = undefined;
+    // timingPromise = $interval(function () { refresh() }, 30000);
+
+    function refresh() {
+
+        $http({
+            method: 'GET',
+            url: '/MS/paper/roomTable',
+            params: {
+                token: $window.sessionStorage.token
+            }
+        })
+            .then(
+            function success(response) {
+                $scope.examineesInfo = response.data;
+                $scope.orderCondition = 'id';
+                $scope.isReverse = false;
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
+    }
 
 });
 examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $window, roomManage) {
@@ -608,6 +690,24 @@ examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $wind
         $rootScope.roomName = '';
         $rootScope.seatName = '';
         $rootScope.ipAdd = '';
+        $http({
+            method: 'GET',
+            url: '/MS/paper/roomArrange',
+            params: {
+                room: $rootScope.roomName,
+                seat: $rootScope.seatName,
+                ipAdd: $rootScope.ipAdd
+            }
+        })
+            .then(
+            function success(response) {
+                alert("保存成功！");
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
 
 
 
@@ -618,7 +718,7 @@ examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $wind
 
 examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
     //控制试卷号的显示
-    $scope.examNumShow="none";
+    $scope.examNumShow = "none";
     //控制表格内容
     // $scope.examineesInfo = response.data;
 
@@ -660,9 +760,9 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
     var SubMap = {
         "计算机": ["政治", "英语", "数学"],
-   
+
         "新闻传播": ["语文", "英语", "数学"],
-       
+
         "美术专业": ["美术", "英语", "数学"],
     };
 
@@ -673,16 +773,43 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
         }, {
             "subName1": "美术专业"
         }];
-    $scope.$watch("selectedSub1", function (newValue,oldValue, scope) {
+    $scope.$watch("selectedSub1", function (newValue, oldValue, scope) {
         $scope.sumSub = SubMap[$scope.selectedSub1];
     });
 
+    $scope.selectExam = function (selection, examNum) {
+        var uidList = [];
+        for (x in selection) {
 
-    $scope.selectSubject = function (major,subject) {
+            if (selection[x]) {
+                uidList.push(x);
+            }
+        }
+        $http({
+            method: 'GET',
+            url: '/MS/paper/stuExamArrange',
+            params: {
+                uidList: uidList,
+                examNum: examNum
+            }
+        })
+            .then(
+            function success(response) {
+                alert("保存成功");
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
+
+    }
+
+
+    $scope.selectSubject = function (major, subject) {
         // refresh(major,subject); 
         switch (subject) {
             case '政治':
-                $scope.subNumlists = [a1,a2];
+                $scope.subNumlists = [a1, a2];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -698,7 +825,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
                     }]
                 break;
             case '英语':
-                $scope.subNumlists = [n1,n2];
+                $scope.subNumlists = [n1, n2];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -714,8 +841,8 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
                     }]
                 break;
             case '数学':
-                $scope.subNumlists = [c1,c2];
-                 $scope.examineesInfo = [{
+                $scope.subNumlists = [c1, c2];
+                $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
                     'subject': '英语',
@@ -746,15 +873,15 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
             method: 'GET',
             url: '/MS/paper/stuExamTable',
             params: {
-                major:$scope.selectedSub1,
-                subject:$scope.selectedSub
+                major: $scope.selectedSub1,
+                subject: $scope.selectedSub
             }
         })
             .then(
             function success(response) {
-               $scope.subNumlists = response.data;
-               $scope.examineesInfo=response.data;
-               $scope.examNumShow="block";
+                $scope.subNumlists = response.data;
+                $scope.examineesInfo = response.data;
+                $scope.examNumShow = "block";
                 $scope.orderCondition = 'id';
                 $scope.isReverse = false;
                 // $scope.cancelAll();
@@ -913,6 +1040,32 @@ examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
                 alert('刷新出错\n' + response.status
                     + ' ' + response.statusText);
             });
+    }
+
+
+});
+examManage.controller('examArrangeCtrl', function ($scope, $http, $window) {
+
+    $scope.sumExport = function () {
+        var uidList = [];
+        for (x in $scope.selectionStatus) {
+
+            if ($scope.selectionStatus[x]) {
+                uidList.push(x);
+            }
+        }
+        alert(uidList);
+        window.open("/MS/paper/sumDownload?token=" + $window.sessionStorage.stoken);
+    };
+    $scope.stuExport = function () {
+        var uidList = [];
+        for (x in $scope.selectionStatus) {
+
+            if ($scope.selectionStatus[x]) {
+                uidList.push(x);
+            }
+        }
+        window.open("/MS/paper/stuDownload?token=" + $window.sessionStorage.stoken);
     }
 
 

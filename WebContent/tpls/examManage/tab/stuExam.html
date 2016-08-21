@@ -10,7 +10,7 @@
         <button class="btn btn-primary" ng-click="selectSubject(selectedSub1,selectedSub)">确认</button>
         <br>
         <select ng-model="examNum" ng-options="x for x in subNumlists" style="display:{{examNumShow}}"></select>
-        <button class="btn btn-primary" ng-click="selectExam(selectionStatus)" style="display:{{examNumShow}}">确认</button>
+        <button class="btn btn-primary" ng-click="selectExam(selectionStatus,examNum)" style="display:{{examNumShow}}">确认</button>
     </div>
 
 

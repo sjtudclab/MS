@@ -39,8 +39,22 @@ routingDemoApp.config(function($stateProvider, $urlRouterProvider) {
 			'stuRoom1@index' : {
 				templateUrl : 'tpls/examManage/tab/stuRoom.html'
 			},
+			'examArrange@index' : {
+				templateUrl : 'tpls/examManage/tab/examArrange.html'
+			},
 			'setSystem1@index' : {
 				templateUrl : 'tpls/examManage/tab/setSystem.html'
+			}
+			
+		}
+	}).state('review', {
+		url : '/review',
+		views : {
+			'' : {
+				templateUrl : 'tpls/review.html'
+			},
+			'navbar@review' : {
+				templateUrl : 'tpls/navi.html'
 			}
 			
 		}

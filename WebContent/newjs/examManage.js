@@ -99,7 +99,26 @@ examManage.controller('examManageCtrl', function ($scope, $rootScope, $http, $wi
     // 初始化显示标签0
     $scope.index = 0;
 
-    $scope.tempTabs = [['tab1', 'tab2'], ['stu1', 'stu2'], ['room1', 'room2'], ['stuExam1'], ['stuRoom1'], ['setSystem1']];
+    $scope.operationTabs = [
+        {
+            tabName: ['试卷导入', '试卷录入'],
+            tabUrl: ['tab1', 'tab2']
+        }, {
+            tabName: ['考生导入', '考生录入'],
+            tabUrl: ['stu1', 'stu2']
+        }, {
+            tabName: ['考场导入', '考场录入'],
+            tabUrl: ['room1', 'room2']
+        }, {
+            tabName: ['考生试卷安排'],
+            tabUrl: ['stuExam1']
+        }, {
+            tabName: ['考生考场安排'],
+            tabUrl: ['stuRoom1']
+        }, {
+            tabName: ['系统管理'],
+            tabUrl: ['setSystem1']
+        }];
 
     // 监控index变量控制标签及标签页
     $scope.$watch('index', function () {
@@ -112,36 +131,28 @@ examManage.controller('examManageCtrl', function ($scope, $rootScope, $http, $wi
         }
         $scope.active[$scope.index] = "active";
         $scope.display[$scope.index] = "block";
-        // switch ($scope.index) {
-        //     case 0:
-        //         $scope.problemMetaInfo = ['试卷导入', '试卷录入'];
-        //         $scope.tab = "tab";
-        //         $rootScope.exInput = 'tpls/examManage/tab/subjectImport.html';
-        //         var subjectStatus = JSON.parse($window.sessionStorage.subjectStatus);
-        //         $scope.majorName = subjectStatus.majorName;
-        //         $scope.kemuName = subjectStatus.name;
-        //         break;
-        //     case 1:
-        //         $scope.problemMetaInfo = ['考生导入', '考生录入'];
-        //         $scope.tab = "stu";
-        //         break;
-        //     case 2:
-        //         $scope.problemMetaInfo = ['考场导入', '考场录入'];
-        //         $scope.tab = "room";
-        //         break;
-        //     case 3:
-        //         $scope.problemMetaInfo = ['考生试卷安排'];
-        //         $scope.tab = "stuExam";
-        //         break;
-        //     case 4:
-        //         $scope.problemMetaInfo = ['考生考场安排'];
-        //         $scope.tab = "stuRoom";
-        //         break;
-        //     case 5:
-        //         $scope.problemMetaInfo = ['系统管理'];
-        //         $scope.tab = "setSystem";
-        //         break;
-        // }
+        switch ($scope.index) {
+            case 0:
+                $rootScope.exInput = 'tpls/examManage/tab/subjectImport.html';
+                var subjectStatus = JSON.parse($window.sessionStorage.subjectStatus);
+                $scope.majorName = subjectStatus.majorName;
+                $scope.kemuName = subjectStatus.name;
+                break;
+            case 1:
+
+                break;
+            case 2:
+
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+        }
 
     });
 });
@@ -208,16 +219,11 @@ examManage.controller('examImportCtrl', function ($state, $scope, $rootScope, $h
     $scope.progressPer = 0;
     $scope.ngshow = false;
     $scope.selectFile = function () {
-        console.log($scope);
+
         $scope.$apply(function () {
-            console.log('exmafile');
             $scope.selectedFile = event.target.files[0];
         })
-        console.log($scope);
-    }
 
-    $scope.testtest = function () {
-        console.log($scope);
     }
 
     $scope.upload = function () {
@@ -350,15 +356,11 @@ examManage.controller('stuImportCtrl', function ($scope, $http, $rootScope, $win
     $scope.progressPer = 0;
     $scope.ngshow = false;
     $scope.selectFile = function () {
-        console.log($scope);
+
         $scope.$apply(function () {
             $scope.selectedFile = event.target.files[0];
             $scope.tt = $scope.selectedFile.name;
         })
-        console.log($scope);
-    }
-    $scope.testtest = function () {
-        console.log($scope);
 
     }
 
@@ -615,7 +617,8 @@ examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $wind
 });
 
 examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
-
+    //控制试卷号的显示
+    $scope.examNumShow="none";
     //控制表格内容
     // $scope.examineesInfo = response.data;
 
@@ -632,38 +635,54 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
     $scope.orderCondition = 'name';
     $scope.isReverse = false;
 
+    //控制表格内容
+    $scope.selectionStatus = [];
+    // 全选
+    $scope.selectAll = function () {
+        for (x in $scope.examineesInfo) {
+            $scope.selectionStatus[$scope.examineesInfo[x].id] = true;
+        }
+    }
+
+    // 取消选择
+    $scope.cancelAll = function () {
+        for (x in $scope.examineesInfo) {
+            $scope.selectionStatus[$scope.examineesInfo[x].id] = false;
+        }
+    }
     // 排序变量
     $scope.thClick = function (value) {
         $scope.orderCondition = value;
         $scope.isReverse = !$scope.isReverse;
     }
 
-    //选择相应科目
-    $scope.sumSub = [{
-        "subName": "政治",
-        "subNum": ["a1", "a2"]
-    }, {
-            "subName": "英语",
-            "subNum": ["b1", "b2"]
-        }, {
-            "subName": "数学",
-            "subNum": ["c1", "c2"]
-        }];
-    $scope.sumSub1 = [{
-        "subName1": "计算机",
-        "subNum": ["a1", "a2"]
-    }, {
-            "subName1": "新闻传播",
-            "subNum": ["b1", "b2"]
-        }, {
-            "subName1": "美术专业",
-            "subNum": ["c1", "c2"]
-        }];
-    $scope.selectSubject = function (selectedSub) {
+    //选择相应专业科目
 
-        switch (selectedSub.subName) {
+    var SubMap = {
+        "计算机": ["政治", "英语", "数学"],
+   
+        "新闻传播": ["语文", "英语", "数学"],
+       
+        "美术专业": ["美术", "英语", "数学"],
+    };
+
+    $scope.sumSub1 = [{
+        "subName1": "计算机"
+    }, {
+            "subName1": "新闻传播"
+        }, {
+            "subName1": "美术专业"
+        }];
+    $scope.$watch("selectedSub1", function (newValue,oldValue, scope) {
+        $scope.sumSub = SubMap[$scope.selectedSub1];
+    });
+
+
+    $scope.selectSubject = function (major,subject) {
+        // refresh(major,subject); 
+        switch (subject) {
             case '政治':
-                $scope.subNumlists = selectedSub.subNum;
+                $scope.subNumlists = [a1,a2];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -679,7 +698,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
                     }]
                 break;
             case '英语':
-                $scope.subNumlists = selectedSub.subNum;
+                $scope.subNumlists = [n1,n2];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -695,10 +714,56 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
                     }]
                 break;
             case '数学':
-                $scope.subNumlists = selectedSub.subNum;
+                $scope.subNumlists = [c1,c2];
+                 $scope.examineesInfo = [{
+                    'name': '李煜',
+                    'id': '678689',
+                    'subject': '英语',
+                    'major': "专业名称"
+
+                }, {
+                        'name': '李静',
+                        'id': '678689',
+                        'subject': '英语',
+                        'major': "专业名称"
+
+                    }]
                 break;
 
         }
+    }
+    // 刷新
+    $scope.refresh = function () {
+        refresh();
+    };
+    //每间隔30s自动刷新
+    var timingPromise = undefined;
+    // timingPromise = $interval(function () { refresh() }, 30000);
+
+    function refresh() {
+
+        $http({
+            method: 'GET',
+            url: '/MS/paper/stuExamTable',
+            params: {
+                major:$scope.selectedSub1,
+                subject:$scope.selectedSub
+            }
+        })
+            .then(
+            function success(response) {
+               $scope.subNumlists = response.data;
+               $scope.examineesInfo=response.data;
+               $scope.examNumShow="block";
+                $scope.orderCondition = 'id';
+                $scope.isReverse = false;
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
+
     }
 
 
@@ -721,21 +786,6 @@ examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
         var month = $scope.myDayTime.getMonth() + 1;
         $scope.startSelected = $scope.myDayTime.getFullYear() + "年" + month + "月" + $scope.myDayTime.getDate() + "日" + $scope.myDayTime.getHours() + "时" + $scope.myDayTime.getMinutes() + "分" + $scope.myDayTime.getSeconds() + "秒";
     }
-    //结束时间
-    // $scope.endDay = new Date();
-    // $scope.endTime = new Date();
-    // $scope.endDayTime = new Date();
-
-    // $scope.endchanged = function () {
-    //     // $scope.poop = false;
-    //     $scope.endDayTime.setTime($scope.endDay.getTime());
-    //     $scope.endDayTime.setHours($scope.endTime.getHours());
-    //     $scope.endDayTime.setMinutes($scope.endTime.getMinutes());
-    //     $scope.endDayTime.setSeconds($scope.endTime.getSeconds());
-    //      var month=$scope.endDayTime.getMonth() + 1;
-    //     $scope.finishSelected = $scope.endDayTime.getFullYear() + "年" + month + "月" + $scope.endDayTime.getDate() + "日" + $scope.endDayTime.getHours() + "时" + $scope.endDayTime.getMinutes() + "分" + $scope.endDayTime.getSeconds() + "秒";
-    // }
-
 
 
     //控制表格内容
@@ -793,18 +843,16 @@ examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
         $scope.isReverse = !$scope.isReverse;
     }
 
-    //选择相应科目
+    //选择相应考场
     $scope.sumSub = [{
-        "subName": "东中院1-101",
-        "subNum": ["a1", "a2"]
+        "subName": "东中院1-101"
     }, {
-            "subName": "东中院1-103",
-            "subNum": ["b1", "b2"]
+            "subName": "东中院1-103"
         }, {
-            "subName": "东中院1-104",
-            "subNum": ["c1", "c2"]
+            "subName": "东中院1-104"
         }];
     $scope.selectSubject = function (selectedSub) {
+        //获得考生id，证件号 
         var uidList = [];
         for (x in $scope.selectionStatus) {
 
@@ -812,9 +860,59 @@ examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
                 uidList.push(x);
             }
         }
-        alert(selectedSub.subName);
-        alert(uidList);
+        //  alert(uidList);
+        //获得考场名
+        // alert(selectedSub.subName);
 
+        $http({
+            method: 'GET',
+            url: '/MS/paper/stuRoom',
+            params: {
+                startTime: $scope.myDayTime.getTime(),
+                duration: $scope.duration,
+                uidLists: uidList,
+                room: selectedSub
+            }
+        })
+            .then(
+            function success(response) {
+                alert("保存成功！");
+                refresh();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
+
+    }
+    // 刷新
+    $scope.refresh = function () {
+        refresh();
+    };
+    //每间隔30s自动刷新
+    var timingPromise = undefined;
+    // timingPromise = $interval(function () { refresh() }, 30000);
+
+    function refresh() {
+
+        $http({
+            method: 'GET',
+            url: '/MS/paper/stuRoomTable',
+            params: {
+
+            }
+        })
+            .then(
+            function success(response) {
+                $scope.examineesInfo = response.data;
+                $scope.orderCondition = 'id';
+                $scope.isReverse = false;
+                // $scope.cancelAll();
+            },
+            function error(response) {
+                alert('刷新出错\n' + response.status
+                    + ' ' + response.statusText);
+            });
     }
 
 

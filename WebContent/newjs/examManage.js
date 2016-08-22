@@ -5,8 +5,8 @@ examManage.directive('customOnChange', function () {
         restrict: 'A',
         link: function (scope, element, attrs) {
             var onChangeFunc = scope.$eval(attrs.customOnChange);
-            console.log(scope);
-            console.log('directive')
+            // console.log(scope);
+            // console.log('directive')
             element.bind('change', onChangeFunc);
         }
     };
@@ -814,7 +814,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
         // refresh(major,subject); 
         switch (subject) {
             case '政治':
-                $scope.subNumlists = [a1, a2];
+                $scope.subNumlists = ["a1", "a2"];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -823,30 +823,30 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
                 }, {
                         'name': '李静',
-                        'id': '678689',
+                        'id': '67869',
                         'subject': '政治',
                         'major': "计算机"
 
                     }]
                 break;
             case '英语':
-                $scope.subNumlists = [n1, n2];
+                $scope.subNumlists = ["n1", "n2"];
                 $scope.examineesInfo = [{
                     'name': '李煜',
-                    'id': '678689',
+                    'id': '67869',
                     'subject': '英语',
                     'major': "专业名称"
 
                 }, {
                         'name': '李静',
-                        'id': '678689',
+                        'id': '67889',
                         'subject': '英语',
                         'major': "专业名称"
 
                     }]
                 break;
             case '数学':
-                $scope.subNumlists = [c1, c2];
+                $scope.subNumlists = ["c1", "c2"];
                 $scope.examineesInfo = [{
                     'name': '李煜',
                     'id': '678689',
@@ -855,7 +855,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
                 }, {
                         'name': '李静',
-                        'id': '678689',
+                        'id': '67689',
                         'subject': '英语',
                         'major': "专业名称"
 
@@ -914,7 +914,7 @@ examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
         $scope.myDayTime.setHours($scope.myTime.getHours());
         $scope.myDayTime.setMinutes($scope.myTime.getMinutes());
         $scope.myDayTime.setSeconds($scope.myTime.getSeconds());
-        console.log($scope.myDayTime.getTime());
+        // console.log($scope.myDayTime.getTime());
         var month = $scope.myDayTime.getMonth() + 1;
         $scope.startSelected = $scope.myDayTime.getFullYear() + "年" + month + "月" + $scope.myDayTime.getDate() + "日" + $scope.myDayTime.getHours() + "时" + $scope.myDayTime.getMinutes() + "分" + $scope.myDayTime.getSeconds() + "秒";
     }

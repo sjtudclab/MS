@@ -812,6 +812,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
     $scope.selectSubject = function (major, subject) {
         // refresh(major,subject); 
+        $scope.examNumShow=" ";
         switch (subject) {
             case '政治':
                 $scope.subNumlists = ["a1", "a2"];

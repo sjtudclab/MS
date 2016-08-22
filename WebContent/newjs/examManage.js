@@ -433,7 +433,7 @@ examManage.controller('stuImportCtrl', function ($scope, $http, $rootScope, $win
         $scope.orderCondition = value;
         $scope.isReverse = !$scope.isReverse;
     }
-     // 刷新
+    // 刷新
     $scope.refresh = function () {
         refresh();
     };
@@ -515,25 +515,27 @@ examManage.controller('stuInputCtrl', function ($scope, $http, $rootScope, $wind
             alert('出现错误\n' + response.status + ' ' + response.statusText);
         });
     }
-
-    $scope.save = function () {
-        alert($scope.roomName + $scope.seatName);
+    $scope.delete = function () {
         $rootScope.stuName = '';
         $rootScope.stuGender = '';
         $rootScope.stuId = '';
         $rootScope.stuSubject = '';
         $rootScope.stuSubNum = '';
         $rootScope.stuPicture = '';
-         $http({
+    }
+    $scope.save = function () {
+        // alert($scope.roomName + $scope.seatName);
+        alert('保存成功!');
+        $http({
             method: 'GET',
             url: '/MS/paper/stuArrange',
             params: {
-                stuName : $rootScope.stuName,
+                stuName: $rootScope.stuName,
                 stuGender: $rootScope.stuGender,
                 stuId: $rootScope.stuId,
-                stuSubject=$rootScope.stuSubject,
-                stuSubNum=$rootScope.stuSubNum,
-                stuPicture=$rootScope.stuPicture
+                stuSubject: $rootScope.stuSubject,
+                stuSubNum: $rootScope.stuSubNum,
+                stuPicture: $rootScope.stuPicture
             }
         })
             .then(
@@ -542,8 +544,8 @@ examManage.controller('stuInputCtrl', function ($scope, $http, $rootScope, $wind
                 // $scope.cancelAll();
             },
             function error(response) {
-                alert('刷新出错\n' + response.status
-                    + ' ' + response.statusText);
+                // alert('保存出错\n' + response.status
+                //     + ' ' + response.statusText);
             });
 
 
@@ -685,11 +687,14 @@ examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $wind
     // }
 
     // }, true);
-    $scope.save = function () {
-        alert($scope.roomName + $scope.seatName);
+    $scope.delete = function () {
         $rootScope.roomName = '';
         $rootScope.seatName = '';
         $rootScope.ipAdd = '';
+    }
+    $scope.save = function () {
+        // alert($scope.roomName + $scope.seatName);
+        alert("保存成功！");
         $http({
             method: 'GET',
             url: '/MS/paper/roomArrange',
@@ -705,8 +710,8 @@ examManage.controller('roomIputCtrl', function ($scope, $http, $rootScope, $wind
                 // $scope.cancelAll();
             },
             function error(response) {
-                alert('刷新出错\n' + response.status
-                    + ' ' + response.statusText);
+                // alert('保存出错\n' + response.status
+                //     + ' ' + response.statusText);
             });
 
 

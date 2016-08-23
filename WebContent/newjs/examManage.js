@@ -1073,6 +1073,60 @@ examManage.controller('examArrangeCtrl', function ($scope, $http, $window) {
         }
         window.open("/MS/paper/stuDownload?token=" + $window.sessionStorage.stoken);
     }
+     //初始化表格
+    $scope.roomMetaInfo = {
+        'id': '场次',
+        'time':'时间'
+    };
+    $scope.selectionStatus = {};
+    // 全选
+    $scope.selectAll = function () {
+        for (x in $scope.exportByRoom) {
+            $scope.selectionStatus[$scope.exportByRoom[x]] = true;
+        }
+    }
+
+    // 取消选择
+    $scope.cancelAll = function () {
+        for (x in $scope.exportByRoom) {
+            $scope.selectionStatus[$scope.exportByRoom[x]] = false;
+        }
+    }
+
+    // 单独选择
+    $scope.checkSel = function (status, roomId) {
+        $scope.cancelAll();
+        $scope.selectionStatus[roomId] = true;
+    }
+
+    // 排序变量
+    $scope.thClick = function (value) {
+        $scope.orderCondition = value;
+        $scope.isReverse = !$scope.isReverse;
+    }
+      // 刷新
+    $scope.refresh = function () {
+        refresh();
+    };
+    //每间隔30s自动刷新
+    var timingPromise = undefined;
+    // timingPromise = $interval(function () { refresh() }, 30000);
+
+    function refresh() {
+        $http.get('/EMS/paper/roomLists', {
+            // $http.get('info.json', {
+            params: {
+                // token: $window.sessionStorage.token
+            }
+        }).then(function successCallback(response) {
+            $scope.exportByRoom = response.data;
+            $scope.orderCondition = 'id';
+            $scope.isReverse = false;
+        }, function errorCallback(response) { })
+
+    }
+   
+
 
 
 });

@@ -1467,7 +1467,7 @@ examManage.controller('subjectCtrl', function ($scope, $rootScope, $http, $windo
             typePoints[4] = $scope.simpleScore;
         }
         if ($scope.fillBlankCheckbox) {
-            subjectStatus.fillBlankCheckbox = true;
+            // subjectStatus.fillBlankCheckbox = true;
             typePoints[5] = $scope.fillBlankScore;
         }
         if ($scope.machineCheckbox) {

@@ -1,17 +1,26 @@
-<div class="col-md-8 col-md-offset-3" style="padding-top:1%;padding-bottom:1%">
-    专业名称：<input ng-model="majorName">
-    科目名称：<input ng-model="kemuName">
+<div class="col-md-8 col-md-offset-2" style="padding-top:2%">
+    <div class="panel-body">
+        <div class="input-group">
+            <span class="input-group-addon">专业名称：</span><input ng-model="majorName" type="text" class="form-control">
+
+            <span class="input-group-addon">科目名称：</span><input ng-model="kemuName" type="text" class="form-control">
+        </div>
+    </div>
 </div>
-<div class="col-md-8 col-md-offset-3" ng-controller="simpleCtrl" style="height:100%">
-    <div class="form-group" style="padding-left:15%;font-size:150%;height:10%">
-        简答题
-    </div>
-    <div class="form-group" >
-        <span style="width:10%;display:inline-block">题目内容：</span><input ng-model="content">
-    </div>
-    <div class="form-group" style="height:10%">
-        <button class="btn btn-primary" ng-click="save()">保存</button> <button class="btn btn-info" ng-click="delete()">下一题</button>
-         <a ng-click="singleReturn()" style="text-decoration:underline;padding-left:3%;cursor:pointer">返回选择题型</a>
-        <a ng-click="singleFinish()" style="text-decoration:underline;padding-left:3%;cursor:pointer">结束试卷录入</a>
+<div class="col-md-8 col-md-offset-2" ng-controller="simpleCtrl" style="padding-top:2%">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;font-size:150%">
+            简答题
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">题目内容：</span><input ng-model="content" type="text" class="form-control">
+        </div>
+        <br>
+        <div class="form-group" style="padding-left:42%">
+            <button class="btn btn-primary" ng-click="save()">保存</button> <button class="btn btn-info" ng-click="delete()">下一题</button>
+            <a ng-click="singleReturn()" style="text-decoration:underline;padding-left:3%;cursor:pointer">返回选择题型</a>
+            <a ng-click="singleFinish()" style="text-decoration:underline;padding-left:3%;cursor:pointer">结束试卷录入</a>
+        </div>
     </div>
 </div>

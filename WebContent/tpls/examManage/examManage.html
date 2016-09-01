@@ -22,7 +22,7 @@
             <div style="height:94%">
                 <div ng-repeat="y in operation.tabUrl" style="background-color:{{color[$index]}};height:100%;display:{{display[$index]}}">
                   
-                    <div ui-view="{{y}}" style="height:100%" ></div>
+                    <div ui-view="{{y}}" style="height:100%;overflow:scroll;" ></div>
                 </div>
             </div>
         </div>

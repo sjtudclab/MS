@@ -1,32 +1,45 @@
-<div class="col-md-8 col-md-offset-3" style="padding-top:1%;padding-bottom:1%">
-    专业名称：<input ng-model="majorName">
-    科目名称：<input ng-model="kemuName">
+<div class="col-md-8 col-md-offset-2" style="padding-top:2%">
+    <div class="panel-body">
+        <div class="input-group">
+            <span class="input-group-addon">专业名称：</span><input ng-model="majorName" type="text" class="form-control">
+
+            <span class="input-group-addon">科目名称：</span><input ng-model="kemuName" type="text" class="form-control">
+        </div>
+    </div>
 </div>
-<div class="col-md-8 col-md-offset-3" ng-controller="singleCtrl">
-    <div class="form-group" style="padding-left:15%;font-size:150%">
-        单选题
-    </div>
-    <div class="form-group">
-        <span style="width:10%;display:inline-block">题干内容：</span><input ng-model="content">
-    </div>
-    <div class="form-group">
-        <span>选项</span>
-        <button class="btn btn-info" type="button" ng-click="itemMessage.push('')">添加</button>
-        <button class="btn btn-info" type="button" ng-click="itemMessage.pop()">删除</button>
-    </div>
-    <div class="form-group" ng-repeat="x in itemMessage track by $index">
-        <br> 选项{{$index+1}}: <input type="text" ng-model="itemMessage[$index]">
-        </input>
-    </div>
-    <div class="form-group">
-        <span style="width:10%;display:inline-block">正确选项：</span>
-        <select  ng-model="rightAnswer">
+<div class="col-md-8 col-md-offset-2" ng-controller="singleCtrl" style="padding-top:2%">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align:center;font-size:150%">
+            单选题
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">题干内容：</span><input ng-model="content" type="text" class="form-control">
+        </div>
+        <br>
+        <div >
+            选项
+            <a style="text-decoration:underline;padding-left:3%;cursor:pointer" type="button" ng-click="itemMessage.push('')">添加</a>
+            <a style="text-decoration:underline;padding-left:3%;cursor:pointer" type="button" ng-click="itemMessage.pop()">删除</a>
+        </div>
+        <br>
+        <div class="input-group" ng-repeat="x in itemMessage track by $index">
+            <span class="input-group-addon">选项{{$index+1}}:</span> <input type="text" ng-model="itemMessage[$index]" type="text" class="form-control">
+            </input>
+
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">正确选项：</span>
+            <select ng-model="rightAnswer" type="text" class="form-control">
             <option ng-repeat="x in itemMessage track by $index">{{$index+1}}</option>
         </select>
-    </div>
-    <div class="form-group" style="padding-left:12%">
-        <button class="btn btn-primary" ng-click="save()">保存</button> <button class="btn btn-info" ng-click="delete()">下一题</button>
-        <a ng-click="singleReturn()" style="text-decoration:underline;padding-left:3%;cursor:pointer">返回选择题型</a>
-        <a ng-click="singleFinish()" style="text-decoration:underline;padding-left:3%;cursor:pointer">结束试卷录入</a>
+        </div>
+        <br>
+        <div class="form-group" style="padding-left:42%">
+            <button class="btn btn-primary" ng-click="save()">保存</button> <button class="btn btn-info" ng-click="delete()">下一题</button>
+            <a ng-click="singleReturn()" style="text-decoration:underline;padding-left:3%;cursor:pointer">返回选择题型</a>
+            <a ng-click="singleFinish()" style="text-decoration:underline;padding-left:3%;cursor:pointer">结束试卷录入</a>
+        </div>
     </div>
 </div>

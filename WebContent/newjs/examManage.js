@@ -165,7 +165,7 @@ examManage.controller('TabsDCtrl', function ($scope, $rootScope) {
     $scope.display = [];
     $scope.color = [];
     $scope.index = 0;
-    for (x in $scope.problemMetaInfo) {
+    for (x in $scope.operationTabs) {
         $scope.active[x] = "";
         $scope.display[x] = 'none';
         $scope.color[x] = "white";

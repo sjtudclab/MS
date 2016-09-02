@@ -1,41 +1,61 @@
 <div ng-controller="stuRoomCtrl" style="height:100%">
 
-    <div style="height:25%;padding-left:30%;padding-top:2%;font-size:120%;width: 80%;">
-
-        <script type="text/ng-template" id="myday.html">
-            <div uib-datepicker ng-model="$parent.myDay" ng-change="changed()"></div>
+    <!--<div style="height:25%;padding-left:30%;padding-top:2%;font-size:120%;width: 80%;">-->
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4" style="height:25%;">
             <br>
-            <div style="float:left;padding-top:15%">选择时间(24时)：</div>
-            <div uib-timepicker ng-model="$parent.myTime" ng-change="changed()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
-        </script>
-        <script type="text/ng-template" id="endday.html">
-            <div uib-datepicker ng-model="$parent.endDay" ng-change="endchanged()"></div>
-            <br>
-            <div style="float:left;padding-top:15%">选择时间(24时)：</div>
-            <div uib-timepicker ng-model="$parent.endTime" ng-change="endchanged()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
-        </script>
-        <!--<div style="float:left">-->
+            <script type="text/ng-template" id="myday.html">
+                <div uib-datepicker ng-model="$parent.myDay" ng-change="changed()"></div>
+                <br>
+                <div style="float:left;padding-top:15%">选择时间(24时)：</div>
+                <div uib-timepicker ng-model="$parent.myTime" ng-change="changed()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
+            </script>
+            <script type="text/ng-template" id="endday.html">
+                <div uib-datepicker ng-model="$parent.endDay" ng-change="endchanged()"></div>
+                <br>
+                <div style="float:left;padding-top:15%">选择时间(24时)：</div>
+                <div uib-timepicker ng-model="$parent.endTime" ng-change="endchanged()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
+            </script>
+            <!--<div style="float:left">-->
+            <div class="input-group">
+                <span class="input-group-addon">开始时间</span>
+                <input type="text" class="form-control" ng-model="startSelected">
+                <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar cursor-pointer " uib-popover-template="'myday.html'" popover-placement="bottom-left" ></span>
+                </span>
 
-        <span>开始时间<input ng-model="startSelected">
-            <button uib-popover-template="'myday.html'" type="button" class="btn btn-primary" popover-placement="bottom-left">选择日期</button>
-         <p></p>
-            考试时长<input ng-model="duration">分钟
+            </div>
+            <!--<span>开始时间<input ng-model="startSelected">
+            <span class="glyphicon glyphicon-calendar cursor-pointer" uib-popover-template="'myday.html'" popover-placement="bottom-left"></span>-->
+            <!--<button uib-popover-template="'myday.html'" type="button" class="btn btn-primary" popover-placement="bottom-left">选择日期</button>-->
+            <p></p>
+            <div class="input-group">
+                <span class="input-group-addon">考试时长</span>
+                <input type="text" class="form-control" ng-model="duration" placeholder="分钟">
+            </div>
+            <!--考试时长<input >分钟-->
             <!--<button uib-popover-template="'endday.html'" type="button" class="btn btn-primary" popover-placement="bottom-left">选择日期</button>
             </span>-->
-        <p></p>
-        <!--</div>-->
-        <span>选择考场</span><select ng-model="selectedRoom" ng-options="x as x.subName for x in sumSub | orderBy:'subName'"></select>
-         <br>
-        <div style="padding-left:40%">
-        <button class="btn btn-primary" ng-click="selectSubject(selectedRoom)">确认</button>
+            <p></p>
+            <!--</div>-->
+            <div class="input-group">
+                <span class="input-group-addon">选择考场</span>
+                <select class="form-control" ng-model="selectedRoom" ng-options="x as x.subName for x in sumSub | orderBy:'subName'"></select>
+            </div>
+            <!--<span>选择考场</span><select class="form-control" ng-model="selectedRoom" ng-options="x as x.subName for x in sumSub | orderBy:'subName'"></select>-->
+            <br>
+            <div style="text-align:center">
+                <button class="btn btn-primary" ng-click="selectSubject(selectedRoom)">确认</button>
+            </div>
+            <br>
         </div>
     </div>
 
 
-    <div class="selectArea" style="display: {{showRoom}}">
+    <div class="selectArea" style="margin: 2% auto; width: 98%;height:75%">
         <div style="height: 5%">
             <!--<span>总人数：{{roomsInfo.length}}&nbsp&nbsp&nbsp&nbsp</span> <span><span>未登录：{{absentNum}}&nbsp&nbsp&nbsp&nbsp</span>-->
-            <span class="glyphicon glyphicon-refresh cursor-pointer" ng-click="refresh()">刷新</span> <span style="float: right"></span>
+            <span class="glyphicon glyphicon-refresh cursor-pointer" ng-click="refresh()" style="float: left">刷新</span>
             <span style="float: right"> 
 					<button type="button" class="btn btn-info" ng-click="selectAll()">全部选择</button>
 					<button type="button" class="btn btn-info" ng-click="cancelAll()">取消选择</button>

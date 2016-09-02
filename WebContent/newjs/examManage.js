@@ -812,7 +812,7 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
     $scope.selectSubject = function (major, subject) {
         // refresh(major,subject); 
-        $scope.examNumShow=" ";
+        $scope.examNumShow = " ";
         switch (subject) {
             case '政治':
                 $scope.subNumlists = ["a1", "a2"];
@@ -902,6 +902,11 @@ examManage.controller('stuExamCtrl', function ($scope, $http, $window) {
 
 });
 examManage.controller('stuRoomCtrl', function ($scope, $http, $window) {
+   
+    $scope.popOpen=false;
+    $scope.popColse=function(){
+        $scope.popOpen=false;
+    }
 
     //时间选择器
     // 开始时间
@@ -1073,10 +1078,10 @@ examManage.controller('examArrangeCtrl', function ($scope, $http, $window) {
         }
         window.open("/MS/paper/stuDownload?token=" + $window.sessionStorage.stoken);
     }
-     //初始化表格
+    //初始化表格
     $scope.roomMetaInfo = {
         'id': '场次',
-        'time':'时间'
+        'time': '时间'
     };
     $scope.selectionStatus = {};
     // 全选
@@ -1104,7 +1109,7 @@ examManage.controller('examArrangeCtrl', function ($scope, $http, $window) {
         $scope.orderCondition = value;
         $scope.isReverse = !$scope.isReverse;
     }
-      // 刷新
+    // 刷新
     $scope.refresh = function () {
         refresh();
     };
@@ -1125,7 +1130,7 @@ examManage.controller('examArrangeCtrl', function ($scope, $http, $window) {
         }, function errorCallback(response) { })
 
     }
-   
+
 
 
 

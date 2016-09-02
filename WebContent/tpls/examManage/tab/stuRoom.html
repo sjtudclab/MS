@@ -5,23 +5,26 @@
         <div class="col-md-3 col-md-offset-4" style="height:25%;">
             <br>
             <script type="text/ng-template" id="myday.html">
-                <div uib-datepicker ng-model="$parent.myDay" ng-change="changed()"></div>
+
+                <div uib-datepicker ng-model="$parent.myDay" class="well well-sm" ng-change="changed()"></div>
+
+              
+                <span style="float:left;padding-top:15%">选择时间(24时)：</span>
+                <span uib-timepicker ng-model="$parent.myTime" ng-change="changed()" show-seconds="true" show-meridian="false" show-spinners="true"></span>
                 <br>
-                <div style="float:left;padding-top:15%">选择时间(24时)：</div>
-                <div uib-timepicker ng-model="$parent.myTime" ng-change="changed()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
+                <div >
+                <button type="button" class="btn btn-info center-block" ng-click="popColse()">关闭</button>
+                </div>
             </script>
-            <script type="text/ng-template" id="endday.html">
-                <div uib-datepicker ng-model="$parent.endDay" ng-change="endchanged()"></div>
-                <br>
-                <div style="float:left;padding-top:15%">选择时间(24时)：</div>
-                <div uib-timepicker ng-model="$parent.endTime" ng-change="endchanged()" show-seconds="true" show-meridian="false" show-spinners="true"></div>
-            </script>
+
             <!--<div style="float:left">-->
             <div class="input-group">
                 <span class="input-group-addon">开始时间</span>
                 <input type="text" class="form-control" ng-model="startSelected">
                 <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar cursor-pointer " uib-popover-template="'myday.html'" popover-placement="bottom-left" ></span>
+                <span class="glyphicon glyphicon-calendar cursor-pointer " uib-popover-template="'myday.html'" popover-placement="bottom-left" popover-append-to-body="true" popover-is-open="popOpen" ></span>
+                </span>
+
                 </span>
 
             </div>
